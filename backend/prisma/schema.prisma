@@ -1,0 +1,399 @@
+// ════════════════════════════════════════════════════════
+// Prisma Schema — Job Search Assistant
+// 14+ models per PDF spec with improvements
+// ════════════════════════════════════════════════════════
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─── Enums ──────────────────────────────────────────────
+
+enum AuthProvider {
+  EMAIL
+  GOOGLE
+  LINKEDIN
+  GITHUB
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  FREELANCE
+  TEMPORARY
+}
+
+enum ExperienceLevel {
+  ENTRY
+  JUNIOR
+  MID
+  SENIOR
+  LEAD
+  EXECUTIVE
+}
+
+enum RemotePreference {
+  ONSITE
+  REMOTE
+  HYBRID
+}
+
+enum SkillProficiency {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+enum ApplicationStatus {
+  SAVED
+  APPLIED
+  VIEWED
+  SCREENING
+  INTERVIEWING
+  OFFERED
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+enum NotificationType {
+  JOB_ALERT
+  APPLICATION_UPDATE
+  AI_RECOMMENDATION
+  SYSTEM
+  PROMOTIONAL
+}
+
+enum UserRole {
+  USER
+  PREMIUM
+  ADMIN
+}
+
+// ─── User & Authentication ──────────────────────────────
+
+model User {
+  id              Int          @id @default(autoincrement())
+  email           String       @unique
+  passwordHash    String?
+  authProvider    AuthProvider @default(EMAIL)
+  providerId      String?
+  role            UserRole     @default(USER)
+  isEmailVerified      Boolean      @default(false)
+  refreshToken         String?
+  resetToken           String?
+  resetTokenExpiresAt  DateTime?
+  lastLoginAt          DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  profile       Profile?
+  savedJobs     SavedJob[]
+  applications  JobApplication[]
+  chatHistory   ChatHistory[]
+  activities    UserActivity[]
+  jobAlerts     JobAlert[]
+  notifications Notification[]
+
+  @@index([email])
+  @@index([authProvider, providerId])
+}
+
+model Profile {
+  id                 Int               @id @default(autoincrement())
+  userId             Int               @unique
+  firstName          String?
+  lastName           String?
+  phone              String?
+  avatarUrl          String?
+  headline           String?
+  summary            String?           @db.Text
+  resumeUrl          String?
+  linkedinUrl        String?
+  githubUrl          String?
+  portfolioUrl       String?
+  currentCompany     String?
+  currentTitle       String?
+  experienceYears    Int?              @default(0)
+  preferredLocations String[]
+  remotePreference   RemotePreference? @default(HYBRID)
+  expectedSalaryMin  Int?
+  expectedSalaryMax  Int?
+  preferredJobTypes  JobType[]
+  profileCompletion  Int               @default(0)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skills         UserSkill[]
+  workExperience WorkExperience[]
+  education      Education[]
+  certifications Certification[]
+
+  @@index([userId])
+}
+
+// ─── Skills ─────────────────────────────────────────────
+
+model Skill {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  category  String?
+  aliases   String[] // e.g. ["JS", "ECMAScript"] for "JavaScript"
+  createdAt DateTime @default(now())
+
+  userSkills UserSkill[]
+
+  @@index([name])
+}
+
+model UserSkill {
+  id          Int              @id @default(autoincrement())
+  profileId   Int
+  skillId     Int
+  proficiency SkillProficiency @default(INTERMEDIATE)
+  yearsOfExp  Int?             @default(0)
+  createdAt   DateTime         @default(now())
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  skill   Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, skillId])
+  @@index([profileId])
+}
+
+// ─── Work Experience & Education ────────────────────────
+
+model WorkExperience {
+  id          Int       @id @default(autoincrement())
+  profileId   Int
+  company     String
+  title       String
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  isCurrent   Boolean   @default(false)
+  description String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+}
+
+model Education {
+  id          Int       @id @default(autoincrement())
+  profileId   Int
+  institution String
+  degree      String
+  field       String?
+  startDate   DateTime
+  endDate     DateTime?
+  grade       String?
+  createdAt   DateTime  @default(now())
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+}
+
+model Certification {
+  id            Int       @id @default(autoincrement())
+  profileId     Int
+  name          String
+  issuer        String
+  issueDate     DateTime?
+  expiryDate    DateTime?
+  credentialUrl String?
+  createdAt     DateTime  @default(now())
+
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+}
+
+// ─── Jobs ───────────────────────────────────────────────
+
+model JobsCache {
+  id              Int              @id @default(autoincrement())
+  externalId      String           @unique
+  source          String // adzuna, jsearch, remotive
+  title           String
+  company         String
+  companyLogo     String?
+  location        String
+  description     String           @db.Text
+  salaryMin       Int?
+  salaryMax       Int?
+  currency        String?          @default("INR")
+  jobType         JobType?
+  experienceLevel ExperienceLevel?
+  isRemote        Boolean          @default(false)
+  skills          String[]
+  applyUrl        String
+  postedAt        DateTime?
+  expiresAt       DateTime?
+  rawData         Json?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  @@index([source])
+  @@index([title])
+  @@index([location])
+  @@index([postedAt])
+  @@index([isRemote])
+}
+
+model SavedJob {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  jobId     String
+  jobData   Json // Denormalized job data for quick access
+  notes     String?  @db.Text
+  folder    String?  @default("default")
+  tags      String[]
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, jobId])
+  @@index([userId])
+  @@index([folder])
+}
+
+model JobApplication {
+  id            Int               @id @default(autoincrement())
+  userId        Int
+  jobId         String
+  jobData       Json
+  status        ApplicationStatus @default(APPLIED)
+  resumeUsed    String?
+  coverLetter   String?           @db.Text
+  notes         String?           @db.Text
+  appliedAt     DateTime          @default(now())
+  lastUpdatedAt DateTime          @updatedAt
+  interviewDate DateTime?
+  followUpDate  DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, jobId])
+  @@index([userId])
+  @@index([status])
+}
+
+// ─── Companies ──────────────────────────────────────────
+
+model Company {
+  id              Int      @id @default(autoincrement())
+  name            String   @unique
+  logo            String?
+  website         String?
+  industry        String?
+  size            String?
+  description     String?  @db.Text
+  rating          Float?
+  workLifeBalance Float?
+  locations       String[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([name])
+}
+
+// ─── AI & Chat ──────────────────────────────────────────
+
+model ChatHistory {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  sessionId String
+  role      String // "user" | "assistant" | "system"
+  content   String   @db.Text
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, sessionId])
+  @@index([createdAt])
+}
+
+// ─── Activity & Notifications ───────────────────────────
+
+model UserActivity {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  action     String // "search", "view_job", "save_job", "apply", "ai_chat"
+  entityType String? // "job", "profile", "chat"
+  entityId   String?
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+model JobAlert {
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  name       String
+  query      String
+  location   String?
+  jobTypes   JobType[]
+  remoteOnly Boolean   @default(false)
+  salaryMin  Int?
+  frequency  String    @default("daily") // "daily", "weekly", "instant"
+  isActive   Boolean   @default(true)
+  lastSentAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isActive])
+}
+
+model Notification {
+  id        Int              @id @default(autoincrement())
+  userId    Int
+  type      NotificationType
+  title     String
+  message   String
+  data      Json?
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+  @@index([createdAt])
+}
+
+// ─── Market Insights ────────────────────────────────────
+
+model MarketInsightsCache {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique // e.g. "salary:frontend-developer:bangalore"
+  data      Json
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([key])
+  @@index([expiresAt])
+}

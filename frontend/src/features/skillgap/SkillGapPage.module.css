@@ -1,0 +1,333 @@
+/* Skill Gap – matches actual SkillGapPage.jsx class names */
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Target card at the top */
+.targetCard {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.targetLabel {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 6px;
+}
+
+.targetCard h1 {
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    color: #1a1a1a;
+}
+
+/* Readiness ring — constrained size */
+.readinessRing {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.ring {
+    width: 100%;
+    height: 100%;
+}
+
+.ringText {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-align: center;
+}
+
+.ringVal {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--color-purple);
+    line-height: 1;
+}
+
+.ringText span:last-child {
+    font-size: 10px;
+    color: #888;
+    font-weight: 500;
+}
+
+/* Main 2-column grid */
+.mainGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 700px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Card */
+.card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.cardTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #1a1a1a;
+}
+
+.cardTitle .material-icons-round {
+    font-size: 17px;
+}
+
+/* Skills list */
+.skillsList {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.skillItem {}
+
+.skillMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #333;
+}
+
+.skillPct {
+    font-size: 12px;
+    color: #888;
+    font-weight: 500;
+}
+
+.progressBar {
+    height: 6px;
+    background: #f0f0f0;
+    border-radius: 50px;
+    overflow: visible;
+    position: relative;
+}
+
+.progressFill {
+    height: 100%;
+    border-radius: 50px;
+    transition: width 0.6s ease;
+}
+
+.progressTarget {
+    position: absolute;
+    top: -3px;
+    width: 2px;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 1px;
+    transform: translateX(-50%);
+}
+
+/* Missing */
+.missingGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+@media (max-width: 700px) {
+    .missingGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.missingCard {
+    background: var(--color-purple-pale);
+    border: 1px solid var(--color-purple-light);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.missingCard h3 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: #1a1a1a;
+}
+
+.missingCard p {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.resources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.resource {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--color-purple);
+    font-weight: 500;
+    padding: 3px 10px;
+    background: #fff;
+    border-radius: 50px;
+    border: 1px solid var(--color-purple-light);
+    transition: all 0.15s;
+}
+
+.resource:hover {
+    background: var(--color-purple);
+    color: #fff;
+}
+
+.resource .material-icons-round {
+    font-size: 13px;
+}
+
+/* Learning path */
+.learningPath {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.pathStep {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.pathStep:last-child {
+    padding-bottom: 0;
+}
+
+.stepNum {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e8e8e8;
+    color: #888;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    z-index: 1;
+}
+
+.stepNum.active {
+    background: var(--color-green);
+    color: #fff;
+}
+
+.stepLine {
+    position: absolute;
+    left: 17px;
+    top: 36px;
+    width: 2px;
+    bottom: 0;
+    background: #eee;
+}
+
+.pathStep:last-child .stepLine {
+    display: none;
+}
+
+.stepContent {
+    flex: 1;
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 14px;
+}
+
+.stepContent h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.stepContent p {
+    font-size: 12px;
+    color: #888;
+}
+
+.viewBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--color-green);
+    color: #fff;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+    align-self: center;
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+
+.viewBtn .material-icons-round {
+    font-size: 14px;
+}
+
+.viewBtn:hover {
+    background: #0a5228;
+}
+
+.viewBtn.locked {
+    background: #eee;
+    color: #aaa;
+}

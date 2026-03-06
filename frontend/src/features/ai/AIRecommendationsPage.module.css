@@ -1,0 +1,343 @@
+/* AI Recommendations – matches actual AIRecommendationsPage.jsx class names */
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Badge */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-purple-pale);
+    color: var(--color-purple);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 50px;
+    width: fit-content;
+}
+
+.badge .material-icons-round {
+    font-size: 16px;
+}
+
+/* Section label */
+.sectionLabel {
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+}
+
+/* Top Picks Grid */
+.topPicksGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .topPicksGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Pick card */
+.pickCard {
+    background: #fff;
+    border: 1.5px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.pickCard:hover {
+    border-color: var(--color-green);
+    box-shadow: 0 4px 20px rgba(13, 102, 52, 0.09);
+    transform: translateY(-2px);
+}
+
+/* Featured variant */
+.pickCard.featured {
+    border-color: var(--color-green);
+    background: var(--color-green-glow);
+}
+
+.featuredTag {
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    background: var(--color-green);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 50px;
+}
+
+/* Pick top row */
+.pickTop {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.pickLogo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--color-purple-pale);
+    color: var(--color-purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: var(--font-heading);
+}
+
+.pickInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.pickInfo h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+}
+
+.pickInfo p {
+    font-size: 13px;
+    color: #888;
+}
+
+.salary {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-success);
+    display: block;
+    margin-top: 3px;
+}
+
+.matchBig {
+    font-family: var(--font-heading);
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--color-green);
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+/* Reasons */
+.reasons {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.reason {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #555;
+}
+
+.reason .material-icons-round {
+    font-size: 15px;
+    color: var(--color-success);
+    flex-shrink: 0;
+}
+
+/* Apply Button */
+.applyBtn {
+    width: 100%;
+    padding: 10px;
+    background: var(--color-green);
+    color: #fff;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background 0.15s;
+    box-shadow: 0 2px 12px rgba(13, 102, 52, 0.2);
+}
+
+.applyBtn:hover {
+    background: #0a5228;
+}
+
+/* Two column layout */
+.twoCol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .twoCol {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Shared card */
+.card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cardTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #1a1a1a;
+}
+
+.cardTitle .material-icons-round {
+    color: var(--color-green);
+    font-size: 17px;
+}
+
+/* Simple row (new jobs) */
+.simpleRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    transition: all 0.15s;
+}
+
+.simpleRow:hover {
+    border-color: var(--color-green);
+}
+
+.simpleRow>div {
+    flex: 1;
+    min-width: 0;
+}
+
+.simpleRow h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+}
+
+.simpleRow p {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Missed row */
+.missedRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #fff5f5;
+    border-radius: 10px;
+    border: 1px solid #fee2e2;
+    transition: all 0.15s;
+}
+
+.missedRow>div {
+    flex: 1;
+    min-width: 0;
+}
+
+.missedRow h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+}
+
+.missedRow p {
+    font-size: 12px;
+    color: #888;
+}
+
+.missedNote {
+    display: inline-block;
+    font-size: 11px;
+    color: #ef4444;
+    font-weight: 500;
+    margin-top: 3px;
+}
+
+/* Match badge (% score for new/missed rows) */
+.matchSm {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--color-green);
+    flex-shrink: 0;
+    min-width: 38px;
+    text-align: right;
+}
+
+/* Quick Apply button */
+.quickBtn {
+    padding: 7px 14px;
+    background: var(--color-green);
+    color: #fff;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: background 0.15s;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.quickBtn:hover {
+    background: #0a5228;
+}
+
+/* Alert me button */
+.alertBtn {
+    padding: 7px 14px;
+    border: 1.5px solid #fca5a5;
+    color: #ef4444;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.15s;
+    flex-shrink: 0;
+    white-space: nowrap;
+    background: #fff;
+}
+
+.alertBtn:hover {
+    background: #ef4444;
+    color: #fff;
+    border-color: #ef4444;
+}

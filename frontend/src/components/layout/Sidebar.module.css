@@ -1,0 +1,226 @@
+/* Sidebar – matches Stitch Dashboard design */
+/* White background, left border nav, green active state */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 220px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    transition: width var(--transition-normal);
+    overflow: hidden;
+}
+
+.sidebar.collapsed {
+    width: 64px;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-5) var(--space-4);
+    border-bottom: 1px solid var(--border-light);
+    min-height: 60px;
+}
+
+.logoDot {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--color-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.logoDot .material-icons-round {
+    font-size: 17px;
+    color: #fff;
+}
+
+.logoText {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.logoPeriod {
+    color: var(--color-green);
+}
+
+/* Toggle button */
+.toggleBtn {
+    position: absolute;
+    top: 14px;
+    right: -12px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+    transition: all var(--transition-fast);
+}
+
+.toggleBtn:hover {
+    background: var(--color-green);
+    border-color: var(--color-green);
+}
+
+.toggleBtn:hover .material-icons-round {
+    color: #fff;
+}
+
+.toggleBtn .material-icons-round {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* Nav */
+.nav {
+    flex: 1;
+    padding: var(--space-4) var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: auto;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 9px var(--space-3);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    position: relative;
+}
+
+.navItem:hover {
+    background: var(--color-green-glow);
+    color: var(--color-green);
+}
+
+.navItem.active {
+    background: var(--color-green);
+    color: #fff;
+    font-weight: 600;
+}
+
+.navItem.active .navIcon {
+    color: #fff;
+}
+
+.navIcon {
+    font-size: 18px;
+    color: inherit;
+    flex-shrink: 0;
+}
+
+.navLabel {
+    flex: 1;
+    letter-spacing: 0.01em;
+}
+
+.badge {
+    background: var(--color-purple-light);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: var(--radius-full);
+    min-width: 18px;
+    text-align: center;
+}
+
+/* Bottom */
+.bottom {
+    padding: var(--space-3);
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+/* User Card */
+.userCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-purple-light);
+    color: #fff;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.userInfo {
+    flex: 1;
+    overflow: hidden;
+}
+
+.userName {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.userRole {
+    display: block;
+    font-size: 10px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logoutBtn {
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    transition: color var(--transition-fast);
+}
+
+.logoutBtn:hover {
+    color: var(--color-error);
+}
+
+.logoutBtn .material-icons-round {
+    font-size: 16px;
+}

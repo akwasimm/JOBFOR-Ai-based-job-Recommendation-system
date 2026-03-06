@@ -1,0 +1,454 @@
+/* Dashboard – matches actual DashboardPage.jsx class names */
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Welcome Banner */
+.welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 22px 28px;
+}
+
+.welcome h1 {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.welcome p {
+    font-size: 14px;
+    color: #666;
+}
+
+.welcome strong {
+    color: #1a1a1a;
+}
+
+.exploreBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: var(--color-green);
+    color: #fff;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s;
+    box-shadow: 0 4px 16px rgba(13, 102, 52, 0.25);
+}
+
+.exploreBtn .material-icons-round {
+    font-size: 18px;
+}
+
+.exploreBtn:hover {
+    background: #0a5228;
+}
+
+/* Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.statCard {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Color variants */
+.statCard.brand {
+    background: var(--color-green-pale);
+    border-color: var(--color-green-pale);
+}
+
+.statCard.info {
+    background: var(--color-purple-pale);
+    border-color: var(--color-purple-pale);
+}
+
+.statCard.success {
+    background: #fff7e6;
+    border-color: #fff7e6;
+}
+
+.statCard.warning {
+    background: #e8f5ff;
+    border-color: #e8f5ff;
+}
+
+.statIcon {
+    font-size: 22px;
+    color: var(--color-green);
+}
+
+.statCard.info .statIcon {
+    color: var(--color-purple);
+}
+
+.statCard.success .statIcon {
+    color: #f59e0b;
+}
+
+.statCard.warning .statIcon {
+    color: #3b82f6;
+}
+
+.statVal {
+    font-family: var(--font-heading);
+    font-size: 30px;
+    font-weight: 900;
+    color: #1a1a1a;
+}
+
+.statLabel {
+    font-size: 12px;
+    color: #888;
+    font-weight: 500;
+}
+
+/* Main 2-col grid */
+.mainGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+@media (max-width: 960px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Card */
+.card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.cardHeader h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cardHeader h2 .material-icons-round {
+    color: var(--color-green);
+    font-size: 18px;
+}
+
+.seeAll {
+    font-size: 13px;
+    color: var(--color-green);
+    font-weight: 500;
+}
+
+.seeAll:hover {
+    text-decoration: underline;
+}
+
+/* Picks List */
+.picksList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pickItem {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.pickItem:last-child {
+    border-bottom: none;
+}
+
+.pickLogo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--color-green);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: var(--font-heading);
+}
+
+.pickInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.pickInfo h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+}
+
+.pickInfo p {
+    font-size: 12px;
+    color: #888;
+}
+
+.salary {
+    font-size: 12px;
+    color: var(--color-success);
+    font-weight: 600;
+    display: block;
+    margin-top: 3px;
+}
+
+.pickRight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.matchScore {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--color-green);
+}
+
+.matchLabel {
+    font-size: 11px;
+    color: #aaa;
+}
+
+.quickApply {
+    padding: 6px 14px;
+    background: var(--color-green);
+    color: #fff;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+
+.quickApply:hover {
+    background: #0a5228;
+}
+
+/* Right Column */
+.rightCol {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Interview Card */
+.interviewCard {
+    background: var(--color-green-pale);
+    border-color: var(--color-green-pale);
+}
+
+.interviewBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-green);
+    margin-bottom: 8px;
+}
+
+.interviewBadge .material-icons-round {
+    font-size: 15px;
+}
+
+.interviewCard h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.interviewCard p {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 14px;
+}
+
+.prepBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1.5px solid var(--color-green);
+    color: var(--color-green);
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.15s;
+}
+
+.prepBtn:hover {
+    background: var(--color-green);
+    color: #fff;
+}
+
+.prepBtn .material-icons-round {
+    font-size: 15px;
+}
+
+/* AI Coach Card */
+.aiCard {
+    background: var(--color-purple-pale);
+    border-color: var(--color-purple-pale);
+}
+
+.aiHeader {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-purple);
+    margin-bottom: 8px;
+}
+
+.aiHeader .material-icons-round {
+    font-size: 16px;
+}
+
+.aiCard p {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.aiCard strong {
+    color: #1a1a1a;
+}
+
+.aiCard em {
+    font-style: normal;
+    text-decoration: underline;
+    text-decoration-color: var(--color-purple);
+}
+
+.aiLink {
+    font-size: 13px;
+    color: var(--color-purple);
+    font-weight: 600;
+}
+
+.aiLink:hover {
+    text-decoration: underline;
+}
+
+/* Activity */
+.activityList {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.activityItem {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.activityItem:last-child {
+    border-bottom: none;
+}
+
+.activityItem p {
+    flex: 1;
+    font-size: 13px;
+    color: #333;
+}
+
+.actIcon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.actIcon.brand {
+    color: var(--color-green);
+}
+
+.actIcon.info {
+    color: var(--color-purple);
+}
+
+.actIcon.warning {
+    color: #f59e0b;
+}
+
+.actIcon.success {
+    color: var(--color-success);
+}
+
+.actTime {
+    font-size: 12px;
+    color: #aaa;
+    white-space: nowrap;
+    flex-shrink: 0;
+}

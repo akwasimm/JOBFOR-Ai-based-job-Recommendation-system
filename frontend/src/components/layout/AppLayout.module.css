@@ -1,0 +1,23 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg-page);
+}
+
+.main {
+    flex: 1;
+    transition: margin-left var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    margin-top: 58px;
+    padding: var(--space-6);
+    flex: 1;
+    animation: fadeIn 0.25s ease;
+    will-change: opacity, transform;
+    max-width: 1400px;
+    width: 100%;
+}

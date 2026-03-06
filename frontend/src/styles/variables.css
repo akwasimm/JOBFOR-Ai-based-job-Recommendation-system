@@ -1,0 +1,150 @@
+/* ===================================================
+   JobFor Design Tokens – SECOND ONE Stitch Project
+   Light Theme · Work Sans · Green + Purple palette
+   =================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  /* === Layout === */
+  --sidebar-width: 220px;
+  --sidebar-collapsed-width: 64px;
+  --navbar-height: 58px;
+
+  /* === Fonts === */
+  --font-body: 'Work Sans', sans-serif;
+  --font-heading: 'Space Grotesk', 'Work Sans', sans-serif;
+
+
+  /* === Colors === */
+  --color-green: #0d6634;
+  --color-green-light: #1a9c4e;
+  --color-green-dark: #084d26;
+  --color-green-pale: #d4edda;
+  --color-green-glow: rgba(13, 102, 52, 0.08);
+
+  --color-purple: #8b5cf6;
+  --color-purple-light: #c9b8f0;
+  --color-purple-pale: #f0ebff;
+  --color-purple-mid: #b49ee8;
+  --color-purple-glow: rgba(139, 92, 246, 0.1);
+
+  --color-yellow: #f59e0b;
+  --color-yellow-pale: #fef3c7;
+  --color-pink: #ec4899;
+  --color-pink-pale: #fce7f3;
+  --color-orange: #f97316;
+  --color-orange-pale: #ffedd5;
+
+  --color-success: #16a34a;
+  --color-error: #dc2626;
+  --color-warning: #d97706;
+  --color-info: #2563eb;
+
+  /* === Backgrounds === */
+  --bg-base: #f5f5f5;
+  --bg-page: #f8f8f6;
+  --bg-card: #ffffff;
+  --bg-elevated: #fafaf8;
+  --bg-hover: #f0f0ec;
+  --bg-dark: #0a0a0a;
+  --bg-sidebar: #ffffff;
+  --bg-nav: #ffffff;
+
+  /* === Text === */
+  --text-primary: #0a0a0a;
+  --text-secondary: #4a4a4a;
+  --text-muted: #888888;
+  --text-on-green: #ffffff;
+  --text-on-dark: #ffffff;
+
+  /* === Borders === */
+  --border-light: #e8e8e4;
+  --border-default: #d0d0cc;
+  --border-strong: #999990;
+  --border-green: #0d6634;
+  --border-purple: rgba(139, 92, 246, 0.3);
+
+  /* === Gradients === */
+  --gradient-green: linear-gradient(135deg, #0d6634 0%, #1a9c4e 100%);
+  --gradient-purple: linear-gradient(135deg, #c9b8f0 0%, #b49ee8 100%);
+  --gradient-hero: linear-gradient(135deg, #0d6634 0%, #1a6b40 50%, #0d6634 100%);
+
+  /* === Shadows === */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-green: 0 4px 16px rgba(13, 102, 52, 0.25);
+
+  /* === Spacing === */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* === Radii === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-full: 9999px;
+
+  /* === Font sizes === */
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-base: 15px;
+  --font-size-md: 17px;
+  --font-size-lg: 19px;
+  --font-size-xl: 22px;
+  --font-size-2xl: 26px;
+  --font-size-3xl: 32px;
+  --font-size-4xl: 40px;
+  --font-size-5xl: 52px;
+
+  /* === Transitions === */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}

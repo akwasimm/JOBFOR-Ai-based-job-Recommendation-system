@@ -1,0 +1,316 @@
+/* Login Page – similar split layout to Register but flipped */
+
+.page {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: var(--bg-base);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    max-width: 1100px;
+    min-height: 100vh;
+}
+
+.leftPanel {
+    background: var(--color-green);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-12);
+    gap: var(--space-6);
+    position: relative;
+    overflow: hidden;
+}
+
+.leftPanel::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    bottom: -80px;
+    right: -80px;
+}
+
+.leftPanel::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    top: -60px;
+    left: -60px;
+}
+
+.panelLogo {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.panelLogo span {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.panelTitle {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    line-height: 1.1;
+    position: relative;
+    z-index: 1;
+}
+
+.panelTitle span {
+    color: var(--color-purple-light);
+}
+
+.panelSub {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.panelFeatures {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: var(--font-size-sm);
+}
+
+.feature .material-icons-round {
+    font-size: 18px;
+    color: var(--color-purple-light);
+}
+
+.rightPanel {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-12);
+}
+
+.formTitle {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-3xl);
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+}
+
+.formSub {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-6);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.field label {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+.input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: #fff;
+    outline: none;
+    transition: all var(--transition-fast);
+}
+
+.input:focus {
+    border-color: var(--color-purple-light);
+    box-shadow: 0 0 0 3px var(--color-purple-glow);
+}
+
+.input::placeholder {
+    color: var(--text-muted);
+}
+
+.passwordField {
+    position: relative;
+}
+
+.passwordField .input {
+    padding-right: 44px;
+}
+
+.eyeBtn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+}
+
+.eyeBtn .material-icons-round {
+    font-size: 18px;
+}
+
+.extras {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size-sm);
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-secondary);
+}
+
+.remember input {
+    accent-color: var(--color-green);
+}
+
+.forgot {
+    color: var(--color-green);
+    font-weight: 500;
+}
+
+.forgot:hover {
+    text-decoration: underline;
+}
+
+.submitBtn {
+    width: 100%;
+    padding: 13px;
+    background: var(--color-green);
+    color: #fff;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    box-shadow: var(--shadow-green);
+}
+
+.submitBtn:hover {
+    background: var(--color-green-light);
+}
+
+.submitBtn.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.registerLink {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.registerLink a {
+    color: var(--color-green);
+    font-weight: 600;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    color: var(--text-muted);
+    font-size: var(--font-size-xs);
+    margin: var(--space-4) 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-light);
+}
+
+.socialBtns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+}
+
+.socialBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: 10px;
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.socialBtn:hover {
+    border-color: var(--color-green);
+    color: var(--text-primary);
+    background: var(--color-green-glow);
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .leftPanel {
+        min-height: 200px;
+        padding: var(--space-8);
+    }
+
+    .rightPanel {
+        padding: var(--space-6);
+    }
+}

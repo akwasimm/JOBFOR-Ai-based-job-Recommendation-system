@@ -1,0 +1,333 @@
+/* Market Insights – matches actual MarketInsightsPage.jsx class names */
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Badge */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--color-green-pale);
+    color: var(--color-green);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 50px;
+    width: fit-content;
+}
+
+.badge .material-icons-round {
+    font-size: 16px;
+}
+
+/* Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.statCard {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: transform 0.15s;
+}
+
+.statCard:hover {
+    transform: translateY(-2px);
+}
+
+.statCard:nth-child(1) {
+    background: var(--color-green-pale);
+}
+
+.statCard:nth-child(2) {
+    background: var(--color-purple-pale);
+}
+
+.statCard:nth-child(3) {
+    background: #fff7e6;
+}
+
+.statCard:nth-child(4) {
+    background: #e8f4fd;
+}
+
+.statIcon {
+    font-size: 22px;
+    margin-bottom: 4px;
+    color: var(--color-green);
+}
+
+.statCard:nth-child(2) .statIcon {
+    color: var(--color-purple);
+}
+
+.statCard:nth-child(3) .statIcon {
+    color: #f59e0b;
+}
+
+.statCard:nth-child(4) .statIcon {
+    color: #3b82f6;
+}
+
+.statVal {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1a1a1a;
+    font-family: var(--font-heading);
+}
+
+.statLabel {
+    font-size: 12px;
+    color: #666;
+}
+
+.change {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.change.up {
+    color: var(--color-success);
+}
+
+.change.down {
+    color: var(--color-error);
+}
+
+/* Charts Grid */
+.chartsGrid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 16px;
+}
+
+@media (max-width: 960px) {
+    .chartsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Card */
+.card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.cardHeader h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cardHeader h2 .material-icons-round {
+    color: var(--color-green);
+    font-size: 18px;
+}
+
+.tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border: 1px solid #e8e8e8;
+    border-radius: 50px;
+    color: #888;
+}
+
+.filterBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #888;
+    border: 1px solid #e8e8e8;
+    border-radius: 50px;
+    padding: 4px 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.filterBtn:hover {
+    border-color: var(--color-green);
+    color: var(--color-green);
+}
+
+.filterBtn .material-icons-round {
+    font-size: 16px;
+}
+
+.cardSub {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 14px;
+}
+
+.cardSub strong {
+    color: #1a1a1a;
+}
+
+/* Companies Grid */
+.companiesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+@media (max-width: 700px) {
+    .companiesGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.companyCard {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    transition: all 0.15s;
+    cursor: pointer;
+}
+
+.companyCard:hover {
+    border-color: var(--color-green);
+    background: var(--color-green-glow);
+}
+
+.companyLogo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--color-purple-pale);
+    color: var(--color-purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: var(--font-heading);
+}
+
+.companyInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.companyInfo h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a1a1a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.companyType {
+    font-size: 11px;
+    color: #999;
+}
+
+.companyRight {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.openRoles {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a1a1a;
+    display: block;
+}
+
+.growth {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.growth.up {
+    color: var(--color-success);
+}
+
+/* CTA */
+.cta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--color-green);
+    border-radius: 14px;
+    padding: 20px 24px;
+    color: #fff;
+}
+
+.cta .material-icons-round {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.cta h3 {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.cta p {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 2px;
+}
+
+.cta>div {
+    flex: 1;
+}
+
+.ctaBtn {
+    padding: 9px 20px;
+    background: #fff;
+    color: var(--color-green);
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background 0.15s;
+    flex-shrink: 0;
+}
+
+.ctaBtn:hover {
+    background: #f0f7f3;
+}

@@ -1,0 +1,303 @@
+/* Navbar – matches Stitch Market Insights top nav */
+/* White background, horizontal nav links, green avatar */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 58px;
+    background: var(--bg-nav);
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: 0 var(--space-6);
+    z-index: 99;
+    transition: left var(--transition-normal);
+}
+
+/* Page title */
+.pageTitle {
+    display: flex;
+    flex-direction: column;
+    min-width: 140px;
+}
+
+.titleText {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+}
+
+/* Search */
+.searchWrap {
+    flex: 1;
+    max-width: 420px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: var(--bg-base);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-full);
+    padding: 7px 14px;
+    transition: border-color var(--transition-fast);
+}
+
+.searchWrap:focus-within {
+    border-color: var(--color-green);
+    background: #fff;
+}
+
+.searchWrap .material-icons-round {
+    color: var(--text-muted);
+    font-size: 18px;
+}
+
+.searchInput {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-body);
+}
+
+.searchInput::placeholder {
+    color: var(--text-muted);
+}
+
+.clearSearch {
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+}
+
+.clearSearch .material-icons-round {
+    font-size: 15px;
+}
+
+.clearSearch:hover {
+    color: var(--text-primary);
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-left: auto;
+}
+
+.iconBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    background: var(--bg-base);
+    border: 1px solid var(--border-light);
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.iconBtn:hover {
+    background: var(--color-green-glow);
+    color: var(--color-green);
+    border-color: var(--color-green);
+}
+
+.iconBtn .material-icons-round {
+    font-size: 18px;
+}
+
+.notifBadge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 7px;
+    height: 7px;
+    background: var(--color-green);
+    border-radius: 50%;
+    border: 1.5px solid #fff;
+}
+
+.avatarBtn {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-purple-light);
+    color: #fff;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-purple-light);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.avatar:hover {
+    border-color: var(--color-purple);
+    box-shadow: 0 0 0 3px var(--color-purple-glow);
+}
+
+/* Dropdown */
+.dropdownWrap {
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 280px;
+    background: #fff;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    z-index: 200;
+    overflow: hidden;
+    animation: fadeIn 0.12s ease;
+}
+
+.dropdownHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border-light);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+}
+
+.markAll {
+    font-size: var(--font-size-xs);
+    color: var(--color-green);
+    cursor: pointer;
+}
+
+.notifItem {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border-light);
+    transition: background var(--transition-fast);
+    cursor: pointer;
+}
+
+.notifItem:hover {
+    background: var(--bg-base);
+}
+
+.notifItem.unread {
+    background: rgba(13, 102, 52, 0.04);
+}
+
+.notifItem p {
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.notifItem span {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
+
+.notifIcon {
+    font-size: 18px;
+    color: var(--color-green);
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* Profile dropdown */
+.profileDropdown {
+    width: 220px;
+}
+
+.dropdownProfile {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.avatarLg {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--color-purple-light);
+    color: #fff;
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.dpName {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.dpRole {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+}
+
+.dropdownDivider {
+    height: 1px;
+    background: var(--border-light);
+}
+
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 9px var(--space-4);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    width: 100%;
+    text-align: left;
+}
+
+.dropdownItem:hover {
+    background: var(--bg-base);
+    color: var(--text-primary);
+}
+
+.dropdownItem .material-icons-round {
+    font-size: 16px;
+}
+
+.logoutItem {
+    color: var(--color-error);
+}
+
+.logoutItem:hover {
+    background: rgba(220, 38, 38, 0.05);
+    color: var(--color-error);
+}
