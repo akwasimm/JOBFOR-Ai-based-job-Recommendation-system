@@ -47,8 +47,8 @@ export const addEducationSchema = z.object({
 export const jobSearchSchema = z.object({
     query: z.string().min(1).max(200).optional(),
     location: z.string().max(100).optional(),
-    jobType: z.array(z.string()).optional(),
-    experienceLevel: z.array(z.string()).optional(),
+    jobType: z.preprocess((val) => typeof val === 'string' ? val.split(',') : val, z.array(z.string())).optional(),
+    experienceLevel: z.preprocess((val) => typeof val === 'string' ? val.split(',') : val, z.array(z.string())).optional(),
     salaryMin: z.coerce.number().int().min(0).optional(),
     salaryMax: z.coerce.number().int().min(0).optional(),
     remote: z.coerce.boolean().optional(),
