@@ -152,7 +152,13 @@ export default function JobDetailModal({ job, onClose, onSave, isSaved }) {
             <div className={styles.modal}>
                 <div className={styles.modalHeader}>
                     <div className={styles.headerLeft}>
-                        <div className={styles.logo}>{job.logo}</div>
+                        <div className={styles.logo}>
+                            {job.companyLogo ? (
+                                <img src={job.companyLogo} alt={job.company} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 6 }} />
+                            ) : (
+                                job.company?.[0] || '?'
+                            )}
+                        </div>
                         <div>
                             <h2 className={styles.jobTitle}>{job.title}</h2>
                             <p className={styles.jobSub}>
@@ -171,28 +177,34 @@ export default function JobDetailModal({ job, onClose, onSave, isSaved }) {
                 <div className={styles.statsBar}>
                     <div className={styles.stat}>
                         <span className="material-icons-round">payments</span>
-                        <span>{job.salary}</span>
+                        <span>
+                            {job.salaryMin && job.salaryMax
+                                ? `${job.currency ?? '$'}${Math.round(job.salaryMin / 1000)}K–${Math.round(job.salaryMax / 1000)}K`
+                                : job.salaryMin ? `${job.currency ?? '$'}${Math.round(job.salaryMin / 1000)}K+` : 'Salary not listed'}
+                        </span>
                     </div>
                     <div className={styles.stat}>
                         <span className="material-icons-round">work_outline</span>
-                        <span>{job.type}</span>
+                        <span>{job.jobType?.replace('_', '-') ?? 'Full-Time'}</span>
                     </div>
                     <div className={styles.stat}>
                         <span className="material-icons-round">schedule</span>
-                        <span>Posted {job.posted} ago</span>
+                        <span>{job.postedAt ? new Date(job.postedAt).toLocaleDateString() : 'Recently'}</span>
                     </div>
                     <div className={styles.stat}>
                         <span className="material-icons-round">groups</span>
                         <span>{details.teamSize || 'Growing team'}</span>
                     </div>
-                    <div className={`${styles.matchBadge}`}>
-                        <span className="material-icons-round">auto_awesome</span>
-                        {job.match}% Match
-                    </div>
+                    {job.matchScore !== undefined && (
+                        <div className={`${styles.matchBadge}`}>
+                            <span className="material-icons-round">auto_awesome</span>
+                            {job.matchScore}% Match
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.tagsRow}>
-                    {job.tags.map(t => <span key={t} className={styles.tag}>{t}</span>)}
+                    {(job.skills || []).map(t => <span key={t} className={styles.tag}>{t}</span>)}
                 </div>
 
                 <div className={styles.body}>
