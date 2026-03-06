@@ -4,7 +4,7 @@ import JobDetailModal from './JobDetailModal';
 import { useToast } from '../../context/ToastContext';
 import { api } from '../../api';
 
-const TYPE_FILTERS = ['All', 'Full-time', 'Remote', 'Hybrid', 'Contract'];
+const TYPE_FILTERS = ['All', 'Full-time', 'Remote', 'Part-time', 'Contract'];
 const LOCATION_FILTERS = ['All Locations', 'Remote', 'Mountain View', 'Seattle', 'San Francisco', 'New York'];
 const SALARY_FILTERS = [
     { label: 'Any Salary', min: 0 },
@@ -50,7 +50,7 @@ export default function JobBoardPage() {
                     if (activeType === 'Remote') {
                         params.remote = true;
                     } else {
-                        const TYPE_MAP = { 'Full-time': 'FULL_TIME', 'Hybrid': 'HYBRID', 'Contract': 'CONTRACT' };
+                        const TYPE_MAP = { 'Full-time': 'FULL_TIME', 'Part-time': 'PART_TIME', 'Contract': 'CONTRACT' };
                         params.jobType = [TYPE_MAP[activeType]];
                     }
                 }
