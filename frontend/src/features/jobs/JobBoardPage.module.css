@@ -272,6 +272,7 @@
     font-weight: 700;
     flex-shrink: 0;
     font-family: var(--font-heading);
+    overflow: hidden;
 }
 
 .jobMain {
