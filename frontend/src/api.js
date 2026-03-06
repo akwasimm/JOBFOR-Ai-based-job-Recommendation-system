@@ -141,7 +141,8 @@ export const api = {
         updateStatus: (id, status) => request(`/applications/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }),
         stats: () => request('/applications/stats'),
         saved: () => request('/applications/saved'),
-        save: (jobId) => request('/applications/saved', { method: 'POST', body: JSON.stringify({ jobId }) }),
+        save: (data) => request('/applications/saved', { method: 'POST', body: JSON.stringify(data) }),
+        unsaveExternal: (jobId) => request(`/applications/saved/external/${jobId}`, { method: 'DELETE' }),
         unsave: (id) => request(`/applications/saved/${id}`, { method: 'DELETE' }),
     },
 

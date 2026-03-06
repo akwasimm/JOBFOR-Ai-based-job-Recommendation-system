@@ -41,6 +41,13 @@ router.post('/saved', validate(saveJobSchema), wrap(applicationController.saveJo
 router.get('/saved', wrap(applicationController.getSavedJobs));
 
 /**
+ * @route DELETE /saved/external/:jobId
+ * @description Removes a specific bookmark association using external API job IDs.
+ * @access Private
+ */
+router.delete('/saved/external/:jobId', wrap(applicationController.unsaveJobByExternalId));
+
+/**
  * @route DELETE /saved/:id
  * @description Removes a specific bookmark association breaking the retention linkage.
  * @access Private

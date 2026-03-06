@@ -58,6 +58,15 @@ export class ApplicationController {
         }
     }
 
+    async unsaveJobByExternalId(req: AuthRequest, res: Response, next: NextFunction) {
+        try {
+            await applicationService.unsaveJobByExternalId(req.user!.id, req.params.jobId as string);
+            res.json({ success: true, message: 'Job unsaved' });
+        } catch (error) {
+            next(error);
+        }
+    }
+
     /**
      * Enacts comprehensive candidate application pipelines shifting entities into formal review ecosystems.
      * 

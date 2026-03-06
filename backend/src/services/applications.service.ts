@@ -71,6 +71,19 @@ export class ApplicationService {
     }
 
     /**
+     * Unsave a job by its external string ID.
+     */
+    async unsaveJobByExternalId(userId: number, jobId: string) {
+        const savedJob = await prisma.savedJob.findUnique({
+            where: { userId_jobId: { userId, jobId } },
+        });
+
+        if (!savedJob) throw new AppError('Saved job not found.', 404);
+
+        await prisma.savedJob.delete({ where: { id: savedJob.id } });
+    }
+
+    /**
      * Elevates transient interaction relationships into robust submission arrays enabling comprehensive tracking mechanisms
      * charting progressive categorical states bridging internal applicant capabilities and corporate portals.
      * 

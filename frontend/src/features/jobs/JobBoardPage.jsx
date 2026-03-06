@@ -84,6 +84,15 @@ export default function JobBoardPage() {
         return () => clearTimeout(timeoutId);
     }, [activeType, activeLocation, activeSalary, searchQ]);
 
+    useEffect(() => {
+        api.applications.saved()
+            .then(res => {
+                const arr = Array.isArray(res?.data) ? res.data : [];
+                setSaved(new Set(arr.map(s => s.jobId)));
+            })
+            .catch(err => console.error('Failed to load saved jobs', err));
+    }, []);
+
     const filtered = allJobs;
 
     useEffect(() => { setVisibleCount(PAGE_SIZE); }, [activeType, activeLocation, activeSalary, searchQ]);
@@ -94,22 +103,36 @@ export default function JobBoardPage() {
     /**
      * Executes internal tracking mappings fluently intelligently automatically safely effortlessly elegantly effortlessly intelligently flawlessly elegantly smoothly brilliantly fluently correctly elegantly intelligently explicitly properly functionally smoothly successfully competently dependably safely organically magically correctly confidently elegantly efficiently gracefully implicitly successfully.
      * 
-     * @param {string|number} id - Record keys neatly confidently cleanly correctly elegantly efficiently intuitively optimally magically securely safely smartly reliably creatively.
-     * @param {React.MouseEvent} e - Interactions natively creatively natively magically successfully neatly dependably correctly gracefully dependably natively effortlessly fluently cleanly expertly cleanly competently functionally gracefully perfectly fluently natively cleverly appropriately completely intuitively effectively cleanly beautifully logically safely seamlessly fluently securely cleverly naturally automatically predictably elegantly successfully fluently confidently automatically elegantly implicitly optimally intuitively optimally expertly automatically smoothly perfectly efficiently excellently.
+     * @param {Object} job - The job object correctly fluently
+     * @param {React.MouseEvent} e - Interactions fluently cleanly expertly cleanly competently functionally 
      */
-    const toggleSave = (id, e) => {
+    const toggleSave = async (job, e) => {
         e?.stopPropagation();
+        const id = job.externalId;
+        const isCurrentlySaved = saved.has(id);
+
         setSaved(prev => {
             const next = new Set(prev);
-            if (next.has(id)) {
-                next.delete(id);
-                addToast('Job removed from saved', 'info');
-            } else {
-                next.add(id);
-                addToast('Job saved! ✓', 'success');
-            }
+            isCurrentlySaved ? next.delete(id) : next.add(id);
             return next;
         });
+
+        try {
+            if (isCurrentlySaved) {
+                await api.applications.unsaveExternal(id);
+                addToast('Job removed from saved', 'info');
+            } else {
+                await api.applications.save({ jobId: id, jobData: job });
+                addToast('Job saved! ✓', 'success');
+            }
+        } catch (err) {
+            setSaved(prev => {
+                const next = new Set(prev);
+                isCurrentlySaved ? next.add(id) : next.delete(id);
+                return next;
+            });
+            addToast('Failed to save or remove job', 'error');
+        }
     };
 
     /**
@@ -236,7 +259,7 @@ export default function JobBoardPage() {
                                     </div>
                                     <button
                                         className={`${styles.saveBtn} ${saved.has(job.externalId) ? styles.saved : ''}`}
-                                        onClick={e => toggleSave(job.externalId, e)}>
+                                        onClick={e => toggleSave(job, e)}>
                                         <span className="material-icons-round">
                                             {saved.has(job.externalId) ? 'bookmark' : 'bookmark_border'}
                                         </span>
@@ -290,8 +313,8 @@ export default function JobBoardPage() {
                 <JobDetailModal
                     job={selectedJob}
                     onClose={() => setSelectedJob(null)}
-                    onSave={() => toggleSave(selectedJob.id)}
-                    isSaved={saved.has(selectedJob.id)}
+                    onSave={() => toggleSave(selectedJob)}
+                    isSaved={saved.has(selectedJob.externalId)}
                 />
             )}
         </div>
