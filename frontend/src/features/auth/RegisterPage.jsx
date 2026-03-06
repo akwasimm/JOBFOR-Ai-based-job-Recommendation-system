@@ -65,7 +65,7 @@ export default function RegisterPage() {
             <div className={styles.card}>
                 <Link to="/" className={styles.logo}>JobFor<span>.</span></Link>
                 <h1>Join the Community</h1>
-                <p className={styles.subtitle}>Over 50,000+ professionals are waiting for you.</p>
+                <p className={styles.subtitle}>Join an exclusive community of top-tier professionals.</p>
                 <div className={styles.communityBadge}>
                     <span className="material-icons-round">diversity_3</span>
                     Create Account — Start your journey with JobFor today.

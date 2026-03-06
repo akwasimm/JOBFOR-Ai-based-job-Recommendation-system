@@ -23,7 +23,7 @@ const FEATURED_JOBS = [
 const STATS = [
     { value: '12,500+', label: 'Jobs Posted' },
     { value: '8,400+', label: 'Companies' },
-    { value: '50,000+', label: 'Professionals' },
+    { value: 'Elite', label: 'Professionals' },
 ];
 
 /**
@@ -64,7 +64,7 @@ export default function LandingPage() {
                             Get Your <span>Dream Job</span> Today
                         </h1>
                         <p className={styles.heroSub}>
-                            Over 50,000+ professionals are already finding their perfect career match.<br />
+                            Join a curated network of professionals finding their perfect career match.<br />
                             Let AI do the heavy lifting.
                         </p>
                         <div className={styles.heroSearch}>
@@ -159,7 +159,7 @@ export default function LandingPage() {
             <section className={styles.cta} ref={ctaRef}>
                 <div className={styles.ctaGlow} />
                 <h2 className="reveal">Sign up now and find your Dream Job</h2>
-                <p className="reveal">Join 50,000+ professionals already using JobFor to accelerate their careers.</p>
+                <p className="reveal">Join an elite community of professionals already using JobFor to accelerate their careers.</p>
                 <div className={`${styles.ctaBtns} reveal`}>
                     <Link to="/auth/register" className={styles.ctaPrimary}>Create Free Account</Link>
                     <Link to="/auth/login" className={styles.ctaSecondary}>Already a member? Log In</Link>
