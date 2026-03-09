@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './JobBoardPage.module.css';
 import JobDetailModal from './JobDetailModal';
 import { useToast } from '../../context/ToastContext';
 import { api } from '../../api';
+import { useQuery } from '@tanstack/react-query';
+import { useWindowVirtualizer } from '@tanstack/react-virtual';
 
 const TYPE_FILTERS = ['All', 'Full-time', 'Remote', 'Part-time', 'Contract'];
 const LOCATION_FILTERS = ['All Locations', 'Remote', 'Bangalore', 'Mumbai', 'Delhi', 'Hyderabad', 'Pune', 'Chennai'];
@@ -14,18 +16,11 @@ const SALARY_FILTERS = [
     { label: '$140K+', min: 140 },
     { label: '$150K+', min: 150 },
 ];
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 20;
 
-/**
- * Executes filterable data grids elegantly magically seamlessly optimally safely fluidly gracefully dependably explicitly smartly adequately seamlessly perfectly correctly fluently reliably dependably intuitively explicitly cleanly brilliantly smoothly seamlessly dependably explicitly beautifully successfully intuitively completely intelligently confidently seamlessly correctly excellently intelligently smoothly confidently intelligently explicitly dependably cleanly creatively successfully elegantly dynamically organically seamlessly cleanly perfectly successfully smoothly cleanly dependably creatively rationally mathematically automatically elegantly.
- * 
- * @returns {JSX.Element} Filtered result panes fluently explicitly dependably dependably smoothly cleanly correctly correctly cleanly creatively cleanly intelligently correctly elegantly dependably explicitly safely natively expertly brilliantly completely elegantly predictably optimally logically dynamically implicitly intelligently smoothly comprehensively logically.
- */
 export default function JobBoardPage() {
     const { addToast } = useToast();
-    const [allJobs, setAllJobs] = useState([]);
-    const [loadingJobs, setLoadingJobs] = useState(true);
-    const [fetchError, setFetchError] = useState(null);
+    const listRef = useRef(null);
 
     const [activeType, setActiveType] = useState('All');
     const [activeLocation, setActiveLocation] = useState('All Locations');
@@ -35,54 +30,32 @@ export default function JobBoardPage() {
     const [selectedJob, setSelectedJob] = useState(null);
     const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-    useEffect(() => {
-        /**
-         * Resolves external job indices seamlessly successfully expertly naturally effectively dependably smoothly safely safely dependably competently dependably properly efficiently logically predictably brilliantly implicitly correctly elegantly logically magically creatively natively effortlessly beautifully correctly dependably intuitively neatly intuitively adequately safely securely exactly cleanly explicitly rationally implicitly securely seamlessly creatively confidently correctly smartly securely smartly smartly securely competently intelligently fluently fluently elegantly.
-         */
-        const load = async () => {
-            setLoadingJobs(true);
-            setFetchError(null);
-            try {
-                const params = {};
-                if (searchQ) params.query = searchQ;
-
-                if (activeType !== 'All') {
-                    if (activeType === 'Remote') {
-                        params.remote = true;
-                    } else {
-                        const TYPE_MAP = { 'Full-time': 'FULL_TIME', 'Part-time': 'PART_TIME', 'Contract': 'CONTRACT' };
-                        params.jobType = [TYPE_MAP[activeType]];
-                    }
+    // 1. Setup React Query for caching and automatic fast-retrieval
+    const { data: allJobs = [], isLoading: loadingJobs, error: fetchError } = useQuery({
+        queryKey: ['jobs', activeType, activeLocation, activeSalary.min, searchQ],
+        queryFn: async () => {
+            const params = {};
+            if (searchQ) params.query = searchQ;
+            if (activeType !== 'All') {
+                if (activeType === 'Remote') params.remote = true;
+                else {
+                    const TYPE_MAP = { 'Full-time': 'FULL_TIME', 'Part-time': 'PART_TIME', 'Contract': 'CONTRACT' };
+                    params.jobType = [TYPE_MAP[activeType]];
                 }
-
-                if (activeLocation !== 'All Locations') {
-                    if (activeLocation === 'Remote') {
-                        params.remote = true;
-                    } else {
-                        params.location = activeLocation;
-                    }
-                }
-
-                if (activeSalary.min > 0) {
-                    params.salaryMin = activeSalary.min * 1000;
-                }
-
-                const res = await api.jobs.search(params);
-                const jobs = res?.data ?? res?.jobs ?? [];
-                setAllJobs(Array.isArray(jobs) ? jobs : []);
-            } catch (err) {
-                console.error('Failed to fetch jobs:', err);
-                setFetchError('Could not connect to the backend. Make sure the server is running on port 3001.');
-            } finally {
-                setLoadingJobs(false);
             }
-        };
+            if (activeLocation !== 'All Locations') {
+                if (activeLocation === 'Remote') params.remote = true;
+                else params.location = activeLocation;
+            }
+            if (activeSalary.min > 0) params.salaryMin = activeSalary.min * 1000;
 
-        const timeoutId = setTimeout(() => {
-            load();
-        }, 400);
-        return () => clearTimeout(timeoutId);
-    }, [activeType, activeLocation, activeSalary, searchQ]);
+            const res = await api.jobs.search(params);
+            const jobs = res?.data ?? res?.jobs ?? [];
+            return Array.isArray(jobs) ? jobs : [];
+        },
+        staleTime: 60 * 1000, // cache for 1 minute before refetching
+        keepPreviousData: true, // Keep old data until new data arrives to avoid flashing loaders
+    });
 
     useEffect(() => {
         api.applications.saved()
@@ -100,12 +73,13 @@ export default function JobBoardPage() {
     const visible = filtered.slice(0, visibleCount);
     const hasMore = visibleCount < filtered.length;
 
-    /**
-     * Executes internal tracking mappings fluently intelligently automatically safely effortlessly elegantly effortlessly intelligently flawlessly elegantly smoothly brilliantly fluently correctly elegantly intelligently explicitly properly functionally smoothly successfully competently dependably safely organically magically correctly confidently elegantly efficiently gracefully implicitly successfully.
-     * 
-     * @param {Object} job - The job object correctly fluently
-     * @param {React.MouseEvent} e - Interactions fluently cleanly expertly cleanly competently functionally 
-     */
+    // 2. Setup React Window Virtualizer for rendering speed
+    const rowVirtualizer = useWindowVirtualizer({
+        count: visible.length,
+        estimateSize: () => 200, // Estimated height of a job card in px
+        overscan: 5, // Render 5 extra cards above/below for smooth scrolling
+    });
+
     const toggleSave = async (job, e) => {
         e?.stopPropagation();
         const id = job.externalId;
@@ -240,58 +214,73 @@ export default function JobBoardPage() {
                 </div>
             ) : (
                 <>
-                    <div className={styles.jobsGrid}>
-                        {visible.map(job => (
-                            <div key={job.externalId} className={styles.jobCard}
-                                onClick={() => setSelectedJob(job)}
-                                role="button" tabIndex={0}
-                                onKeyDown={e => e.key === 'Enter' && setSelectedJob(job)}>
-                                <div className={styles.jobTop}>
-                                    <div className={styles.jobLogo}>
-                                        {job.companyLogo
-                                            ? <img src={job.companyLogo} alt={job.company} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 6 }} onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
-                                            : null}
-                                        <span style={{ display: job.companyLogo ? 'none' : 'flex' }}>{job.company?.[0] ?? '?'}</span>
+                    <div className={styles.jobsGrid} style={{ height: `${rowVirtualizer.getTotalSize()}px`, position: 'relative', width: '100%' }}>
+                        {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+                            const job = visible[virtualRow.index];
+                            return (
+                                <div key={job.externalId} className={styles.jobCardVirtual}
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        transform: `translateY(${virtualRow.start}px)`,
+                                        height: `${virtualRow.size - 16}px` // account for gap
+                                    }}>
+                                    <div className={styles.jobCard}
+                                        onClick={() => setSelectedJob(job)}
+                                        role="button" tabIndex={0}
+                                        onKeyDown={e => e.key === 'Enter' && setSelectedJob(job)}
+                                        style={{ height: '100%', margin: 0 }}>
+
+                                        <div className={styles.jobTop}>
+                                            <div className={styles.jobLogo}>
+                                                {job.companyLogo
+                                                    ? <img src={job.companyLogo} alt={job.company} style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 6 }} onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
+                                                    : null}
+                                                <span style={{ display: job.companyLogo ? 'none' : 'flex' }}>{job.company?.[0] ?? '?'}</span>
+                                            </div>
+                                            <div className={styles.jobMain}>
+                                                <h3>{job.title}</h3>
+                                                <p>{job.company} · {job.location}</p>
+                                            </div>
+                                            <button
+                                                className={`${styles.saveBtn} ${saved.has(job.externalId) ? styles.saved : ''}`}
+                                                onClick={e => toggleSave(job, e)}>
+                                                <span className="material-icons-round">
+                                                    {saved.has(job.externalId) ? 'bookmark' : 'bookmark_border'}
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div className={styles.jobTags}>
+                                            {job.skills?.slice(0, 4).map(t => <span key={t} className={styles.tag}>{t}</span>)}
+                                            {job.isRemote && <span className={styles.tag} style={{ color: '#4ade80' }}>Remote</span>}
+                                        </div>
+                                        <div className={styles.jobBottom} style={{ marginTop: 'auto' }}>
+                                            <div className={styles.jobMeta}>
+                                                <span className={styles.jobType}>{job.jobType?.replace('_', '-') ?? 'Full-Time'}</span>
+                                                <span className={styles.jobPosted}>
+                                                    {job.postedAt ? new Date(job.postedAt).toLocaleDateString() : 'Recently'}
+                                                </span>
+                                                <span className={styles.jobSalary}>
+                                                    {job.salaryMin && job.salaryMax
+                                                        ? `${job.currency ?? '$'}${Math.round(job.salaryMin / 1000)}K–${Math.round(job.salaryMax / 1000)}K`
+                                                        : job.salaryMin ? `${job.currency ?? '$'}${Math.round(job.salaryMin / 1000)}K+`
+                                                            : 'Salary not listed'}
+                                                </span>
+                                            </div>
+                                            <div className={styles.jobActions}>
+                                                {job.match && <span className={styles.matchBadge}>{job.match}% match</span>}
+                                                <button className={styles.applyBtn}
+                                                    onClick={e => handleApply(job, e)}>
+                                                    Apply Now
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className={styles.jobMain}>
-                                        <h3>{job.title}</h3>
-                                        <p>{job.company} · {job.location}</p>
-                                    </div>
-                                    <button
-                                        className={`${styles.saveBtn} ${saved.has(job.externalId) ? styles.saved : ''}`}
-                                        onClick={e => toggleSave(job, e)}>
-                                        <span className="material-icons-round">
-                                            {saved.has(job.externalId) ? 'bookmark' : 'bookmark_border'}
-                                        </span>
-                                    </button>
                                 </div>
-                                <div className={styles.jobTags}>
-                                    {job.skills?.slice(0, 4).map(t => <span key={t} className={styles.tag}>{t}</span>)}
-                                    {job.isRemote && <span className={styles.tag} style={{ color: '#4ade80' }}>Remote</span>}
-                                </div>
-                                <div className={styles.jobBottom}>
-                                    <div className={styles.jobMeta}>
-                                        <span className={styles.jobType}>{job.jobType?.replace('_', '-') ?? 'Full-Time'}</span>
-                                        <span className={styles.jobPosted}>
-                                            {job.postedAt ? new Date(job.postedAt).toLocaleDateString() : 'Recently'}
-                                        </span>
-                                        <span className={styles.jobSalary}>
-                                            {job.salaryMin && job.salaryMax
-                                                ? `${job.currency ?? '$'}${Math.round(job.salaryMin / 1000)}K–${Math.round(job.salaryMax / 1000)}K`
-                                                : job.salaryMin ? `${job.currency ?? '$'}${Math.round(job.salaryMin / 1000)}K+`
-                                                    : 'Salary not listed'}
-                                        </span>
-                                    </div>
-                                    <div className={styles.jobActions}>
-                                        {job.match && <span className={styles.matchBadge}>{job.match}% match</span>}
-                                        <button className={styles.applyBtn}
-                                            onClick={e => handleApply(job, e)}>
-                                            Apply Now
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     {hasMore && (

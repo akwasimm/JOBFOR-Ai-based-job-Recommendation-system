@@ -2,15 +2,14 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '../context/AuthContext';
 import { ToastProvider } from '../context/ToastContext';
-import AppLayout from '../components/layout/AppLayout';
-
 // ─── Critical path: loaded immediately ───────────────────────
 import LandingPage from '../features/auth/LandingPage';
 import LoginPage from '../features/auth/LoginPage';
 import RegisterPage from '../features/auth/RegisterPage';
-import DashboardPage from '../features/dashboard/DashboardPage';
 
 // ─── Lazy: loaded only when first visited ────────────────────
+const AppLayout = lazy(() => import('../components/layout/AppLayout'));
+const DashboardPage = lazy(() => import('../features/dashboard/DashboardPage'));
 const JobBoardPage = lazy(() => import('../features/jobs/JobBoardPage'));
 const SavedJobsPage = lazy(() => import('../features/jobs/SavedJobsPage'));
 const AppliedJobsPage = lazy(() => import('../features/jobs/AppliedJobsPage'));

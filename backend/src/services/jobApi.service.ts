@@ -345,7 +345,30 @@ export class JobApiService {
         }
 
         const [dbJobs, total] = await Promise.all([
-            prisma.jobsCache.findMany({ where, orderBy, skip, take: limit }),
+            prisma.jobsCache.findMany({
+                where,
+                orderBy,
+                skip,
+                take: limit,
+                select: {
+                    externalId: true,
+                    source: true,
+                    title: true,
+                    company: true,
+                    companyLogo: true,
+                    location: true,
+                    description: true,
+                    salaryMin: true,
+                    salaryMax: true,
+                    currency: true,
+                    jobType: true,
+                    isRemote: true,
+                    skills: true,
+                    applyUrl: true,
+                    postedAt: true,
+                    expiresAt: true
+                }
+            }),
             prisma.jobsCache.count({ where }),
         ]);
 

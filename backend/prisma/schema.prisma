@@ -250,7 +250,10 @@ model JobsCache {
 
   @@index([source])
   @@index([title])
+  @@index([company])
+  @@index([title, company])
   @@index([location])
+  @@index([location, isRemote])
   @@index([postedAt])
   @@index([isRemote])
 }

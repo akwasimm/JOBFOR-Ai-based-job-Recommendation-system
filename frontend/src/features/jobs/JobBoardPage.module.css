@@ -229,9 +229,10 @@
 
 /* Jobs Grid */
 .jobsGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 16px;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 800px;
 }
 
 .jobCard {

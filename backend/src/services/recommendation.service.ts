@@ -113,14 +113,34 @@ export class RecommendationService {
 
         if (!profile) return [];
 
-        const jobs = await prisma.jobsCache.findMany({
-            orderBy: { postedAt: 'desc' },
-            take: 200,
-        });
+        const userSkills = (profile.skills || []).map((us: any) => us.skill.name.toLowerCase());
+
+        let jobs;
+        if (userSkills.length > 0) {
+            jobs = await prisma.jobsCache.findMany({
+                where: {
+                    skills: {
+                        hasSome: userSkills
+                    }
+                },
+                orderBy: { postedAt: 'desc' },
+                take: 300,
+            });
+
+            if (jobs.length === 0) {
+                jobs = await prisma.jobsCache.findMany({
+                    orderBy: { postedAt: 'desc' },
+                    take: 200,
+                });
+            }
+        } else {
+            jobs = await prisma.jobsCache.findMany({
+                orderBy: { postedAt: 'desc' },
+                take: 200,
+            });
+        }
 
         if (jobs.length === 0) return [];
-
-        const userSkills = (profile.skills || []).map((us: any) => us.skill.name.toLowerCase());
 
         let mlScores: Record<string, number> = {};
         try {
@@ -128,7 +148,7 @@ export class RecommendationService {
                 user_skills: userSkills,
                 jobs: jobs.map((j) => ({
                     id: j.externalId,
-                    description: `${j.title} ${j.description}`,
+                    description: `${j.title} ${j.skills.join(' ')}`,
                     skills_required: j.skills,
                 }))
             });
@@ -422,7 +442,14 @@ export class RecommendationService {
         const job = await jobApiService.getJobById(jobId);
         if (!job) return [];
 
-        const allJobs = await prisma.jobsCache.findMany({ take: 100 });
+        const allJobs = await prisma.jobsCache.findMany({
+            where: {
+                skills: {
+                    hasSome: job.skills.map(s => s.toLowerCase()),
+                }
+            },
+            take: 100
+        });
 
         const scored = allJobs
             .filter((j) => j.externalId !== jobId)
